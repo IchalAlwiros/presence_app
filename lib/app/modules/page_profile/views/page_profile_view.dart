@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:presence_app/app/routes/app_pages.dart';
 
 import '../controllers/page_profile_controller.dart';
 
@@ -18,13 +19,13 @@ class PageProfileView extends GetView<PageProfileController> {
             stream: controller.streamUser(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                Center(
-                  child: CircularProgressIndicator(),
-                );
+                return Center(child: CircularProgressIndicator());
               }
               if (snapshot.hasData) {
-                //Map<String, dynamic> user = snapshot.data!.data()!;
+                //Untuk Mendapatkan data Map dari snapshot.data
                 Map<String, dynamic> user = snapshot.data!.data()!;
+                String defaultImage =
+                    "https://ui-avatars.com/api/?name=${user['name']}";
                 return ListView(
                   padding: EdgeInsets.all(20),
                   children: [
@@ -36,7 +37,11 @@ class PageProfileView extends GetView<PageProfileController> {
                             height: 100,
                             width: 100,
                             child: Image.network(
-                              "https://ui-avatars.com/api/?name=${user['name']}",
+                              user['profile'] != null
+                                  ? user['profile'] != ""
+                                      ? user['profile']
+                                      : defaultImage
+                                  : defaultImage,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -50,19 +55,28 @@ class PageProfileView extends GetView<PageProfileController> {
                     Text('${user['']}'),
                     SizedBox(height: 20),
                     ListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(
+                          Routes.UPDATE_PROFILE,
+                          arguments: user,
+                        );
+                      },
                       leading: Icon(Icons.person),
                       title: Text('Update Profile'),
                     ),
                     ListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(Routes.UPDATE_PASSWORD);
+                      },
                       leading: Icon(Icons.key),
                       title: Text('Update Password'),
                     ),
                     if (user['role'] == 'admin')
                       ListTile(
-                        onTap: () {},
-                        leading: Icon(Icons.logout),
+                        onTap: () {
+                          Get.toNamed(Routes.ADD_PEGAWAI);
+                        },
+                        leading: Icon(Icons.person_add),
                         title: Text('Add Pegawai'),
                       ),
                     ListTile(

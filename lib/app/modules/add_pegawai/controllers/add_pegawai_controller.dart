@@ -58,16 +58,16 @@ class AddPegawaiController extends GetxController {
           Get.back(); // back to home
           Get.snackbar('Berhasil', "Berhasil Menambahkan pegawai");
         }
-        print(pegawaiCredential);
+        // print(pegawaiCredential);
       } on FirebaseAuthException catch (e) {
-        isLoadingAddPegawai.value = false;
-        print(e.code);
+        // isLoadingAddPegawai.value = false;
+        // print(e.code);
         if (e.code == 'weak-password') {
-          print('The password provided is too weak.');
+          // print('The password provided is too weak.');
           Get.snackbar(
               "Terjadi Kesalahan", "Password Anda Tidak Memenui Kreteria");
         } else if (e.code == 'email-already-in-use') {
-          print('The account already exists for that email.');
+          // print('The account already exists for that email.');
           Get.snackbar("Terjadi Kesalahan", "Pegawai Sudah Terdaftar");
         } else if (e.code == "wrong-password") {
           Get.snackbar(
@@ -76,9 +76,13 @@ class AddPegawaiController extends GetxController {
           Get.snackbar('Terjadi Kesalahan', "${e.code}");
         }
       } catch (e) {
-        isLoadingAddPegawai.value = false;
+        // isLoadingAddPegawai.value = false;
         print(e);
         Get.snackbar("Terjadi Kesalahan", "Tidak dapat menambahkan pegawai");
+      } finally {
+        //finnaly ini akan selalu dijalan kan ditry juga catch
+        isLoading.value = false;
+        isLoadingAddPegawai.value = false;
       }
     } else {
       isLoading.value = false;

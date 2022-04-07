@@ -27,6 +27,7 @@ void main() async {
           }
           print(snapshot.data);
           return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
             title: "Application",
             // initialRoute: AppPages.INITIAL,
             // initialRoute: Routes.LOGIN,

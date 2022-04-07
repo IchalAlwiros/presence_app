@@ -25,7 +25,7 @@ class LoginController extends GetxController {
         //Melakukan pengecekan/verifikasi email yang benar
         if (userCredential.user != null) {
           if (userCredential.user!.emailVerified == true) {
-            isLoading.value = false;
+            // isLoading.value = false;
             if (passC.text == 'userPW') {
               Get.offAllNamed(Routes.NEW_PASSWORD);
             } else {
@@ -53,11 +53,14 @@ class LoginController extends GetxController {
                       Get.snackbar(
                           'Kami telah mengirimkan verifikasi ke email anda',
                           'Cek email');
-                      isLoading.value = false;
+                      // isLoading.value = false;
                     } catch (e) {
-                      isLoading.value = false;
+                      // isLoading.value = false;
                       Get.snackbar('Terjadi Kesalagan',
                           'Tidak dapat melakukan Verifikasi Hubungi admin');
+                    } finally {
+                      //finnaly ini akan selalu dijalan kan ditry juga catch
+                      isLoading.value = false;
                     }
                   },
                   child: Text('Kirim Ulang'),
@@ -67,9 +70,9 @@ class LoginController extends GetxController {
           }
         }
         // Get.offAllNamed(Routes.HOME);
-        isLoading.value = false;
+        // isLoading.value = false;
       } on FirebaseAuthException catch (e) {
-        isLoading.value = false;
+        // isLoading.value = false;
 
         if (e.code == 'user-not-found') {
           Get.snackbar('Terjadi Kesalahan', "Email Tidak terdaftar");
@@ -77,9 +80,12 @@ class LoginController extends GetxController {
           Get.snackbar('Terjadi Kesalahan', "Password Salah");
         }
       } catch (e) {
-        isLoading.value = false;
+        // isLoading.value = false;
         // catch general / kesalahan diluar kondisi diatas
         Get.snackbar('Terjadi Kesalahan', "Tidak Dapat Login");
+      } finally {
+        //finnaly ini akan selalu dijalan kan ditry juga catch
+        isLoading.value = false;
       }
     } else {
       Get.snackbar('Terjadi Kesalahan', "Email dan Password wajib diisi");
