@@ -10,6 +10,7 @@ class AddPegawaiController extends GetxController {
   TextEditingController nameC = TextEditingController();
   TextEditingController nipC = TextEditingController();
   TextEditingController emailC = TextEditingController();
+  TextEditingController jobC = TextEditingController();
   TextEditingController passAdminC = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -39,6 +40,7 @@ class AddPegawaiController extends GetxController {
           await firestore.collection("pegawai").doc(uid).set({
             "nip": nipC.text,
             "name": nameC.text,
+            "job": jobC.text,
             "email": emailC.text,
             "uid": uid,
             "role": "pegawai",
@@ -94,7 +96,8 @@ class AddPegawaiController extends GetxController {
   Future<void> addPegawai() async {
     if (nameC.text.isNotEmpty &&
         nipC.text.isNotEmpty &&
-        emailC.text.isNotEmpty) {
+        emailC.text.isNotEmpty &&
+        jobC.text.isNotEmpty) {
       isLoading.value = true;
       Get.defaultDialog(
           title: "Validasi Admin",

@@ -11,6 +11,8 @@ abstract class Routes {
   static const PAGE_PROFILE = _Paths.PAGE_PROFILE;
   static const UPDATE_PROFILE = _Paths.UPDATE_PROFILE;
   static const UPDATE_PASSWORD = _Paths.UPDATE_PASSWORD;
+  static const DETAIL_PRESENSI = _Paths.DETAIL_PRESENSI;
+  static const ALL_PRESESENSI = _Paths.ALL_PRESESENSI;
 }
 
 abstract class _Paths {
@@ -23,4 +25,6 @@ abstract class _Paths {
   static const PAGE_PROFILE = '/page-profile';
   static const UPDATE_PROFILE = '/update-profile';
   static const UPDATE_PASSWORD = '/update-password';
+  static const DETAIL_PRESENSI = '/detail-presensi';
+  static const ALL_PRESESENSI = '/all-presesensi';
 }

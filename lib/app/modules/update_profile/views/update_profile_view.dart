@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -52,26 +55,69 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                user["profile"] != null && user["profile"] != ""
-                    ? Text('foto profile')
-                    : Text('no choosen'),
-                Text('no choosen'),
+                // user["profile"] != null && user["profile"] != ""
+                //     ? Text('foto profile')
+                //     : Text('no choosen'),
+                // Text('no choosen'),
+                GetBuilder<UpdateProfileController>(builder: (controller) {
+                  if (controller.image != null) {
+                    return Column(
+                      children: [
+                        ClipOval(
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            child: Image.file(
+                              File(controller.image!.path),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            controller.deleteProfile(user['uid']);
+                          },
+                          child: Text('delete'),
+                        )
+                      ],
+                    );
+                  } else {
+                    if (user['profile'] != null) {
+                      return ClipOval(
+                        child: Container(
+                          height: 100,
+                          width: 100,
+                          child: Image.network(
+                            user['profile'],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Text('no image');
+                    }
+                  }
+                }),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.pickImage();
+                    },
                     child: Text(
                       'choose',
                     ))
               ],
             ),
             SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () async {
-                if (controller.isLoading.isFalse) {
-                  await controller.updateProfile(user['uid']);
-                }
-              },
-              child: Text('Update Profile'),
-            )
+            Obx(() => ElevatedButton(
+                  onPressed: () async {
+                    if (controller.isLoading.isFalse) {
+                      await controller.updateProfile(user['uid']);
+                    }
+                  },
+                  child: controller.isLoading.isFalse
+                      ? Text('Update Profile')
+                      : CircularProgressIndicator(),
+                ))
           ],
         ));
   }
