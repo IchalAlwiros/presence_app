@@ -23,7 +23,7 @@ class LoginView extends GetView<LoginController> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFormField(
@@ -34,7 +34,7 @@ class LoginView extends GetView<LoginController> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             //obx fungsinya spt set state

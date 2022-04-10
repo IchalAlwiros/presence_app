@@ -6,7 +6,7 @@ Color kBlackColor = Color(0xff1F1449);
 Color kWhiteColor = Color(0xffFFFFFF);
 Color kGreyColor = Color(0xff9698A9);
 Color kBlueColor = Color(0xff0039a6);
-Color kTifanyColor = Color(0xff81D8D0);
+Color kTifanyColor = Color(0xffB9D9EB);
 Color kBackgroundColor = Color(0xff2a52be);
 Color kInactiveColor = Color(0xff0CAFFF);
 
@@ -34,7 +34,7 @@ TextStyle greenAccentTextStyle = GoogleFonts.poppins(
   color: kInactiveColor,
 );
 
-TextStyle greenTextStyle = GoogleFonts.poppins(
+TextStyle blueTextStyle = GoogleFonts.poppins(
   color: kPrimaryColor,
 );
 

@@ -31,7 +31,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               autocorrect: false,
               controller: controller.nameC,
@@ -40,7 +40,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               readOnly: true,
               autocorrect: false,
@@ -50,7 +50,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text('Photo Profile'),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,7 +107,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                     ))
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Obx(() => ElevatedButton(
                   onPressed: () async {
                     if (controller.isLoading.isFalse) {

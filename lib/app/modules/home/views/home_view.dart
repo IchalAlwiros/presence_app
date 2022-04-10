@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:presence_app/app/controllers/page_index_controller.dart';
 import 'package:presence_app/app/routes/app_pages.dart';
+import 'package:presence_app/app/theme/theme.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -18,31 +19,18 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HomeView'),
+        title: Text(
+          'HOMEVIEW',
+          style: whiteTextStyle.copyWith(
+            fontWeight: semiBold,
+          ),
+        ),
+        backgroundColor: kPrimaryColor,
         centerTitle: true,
         actions: [
           IconButton(
               onPressed: () => Get.toNamed(Routes.PAGE_PROFILE),
               icon: Icon(Icons.person))
-
-          // StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-          //     stream: controller.streamRole(), //untuk memantau role
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return SizedBox();
-          //       }
-          //       String role = snapshot.data!.data()!["role"];
-          //       return IconButton(onPressed: () =>  Get.toNamed((role == 'admin') ? Routes.ADD_PEGAWAI) :, icon: icon)
-          //       // if (role == "admin") {
-          //       //   //Ini admin
-          //       //   return IconButton(
-          //       //     onPressed: () => Get.toNamed(Routes.ADD_PEGAWAI),
-          //       //     icon: Icon(Icons.person),
-          //       //   );
-          //       // } else {
-          //       //   return SizedBox();
-          //       // }
-          //     }),
         ],
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -76,11 +64,17 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Welcome, '),
+                          Text(
+                            'Welcome',
+                            style: blackTextStyle.copyWith(
+                              fontSize: 18,
+                              fontWeight: semiBold,
+                            ),
+                          ),
                           Container(
                             width: 200,
                             child: Text(
@@ -88,31 +82,49 @@ class HomeView extends GetView<HomeController> {
                                   ? '${user['address']}'
                                   : "Belum Ada Posisi",
                               textAlign: TextAlign.left,
+                              style: blackTextStyle.copyWith(
+                                fontWeight: light,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.red[200],
+                      color: kBackgroundColor,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('${user["job"]}'),
-                        SizedBox(height: 20),
-                        Text('${user["nip"]}'),
-                        SizedBox(height: 10),
-                        Text('${user["name"]}'),
+                        Text(
+                          'Name      :  ${user["name"]}',
+                          style: whiteTextStyle.copyWith(
+                            fontWeight: medium,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Job           :  ${user["job"]}',
+                          style: whiteTextStyle.copyWith(
+                            fontWeight: medium,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'NIP            :  ${user["nip"]}',
+                          style: whiteTextStyle.copyWith(
+                            fontWeight: medium,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -139,10 +151,22 @@ class HomeView extends GetView<HomeController> {
                                 children: [
                                   Column(
                                     children: [
-                                      Text('Masuk'),
-                                      Text(dataToday?['masuk'] == null
-                                          ? '--:--'
-                                          : "${DateFormat.jms().format(DateTime.parse(dataToday!['masuk']['date']))}"),
+                                      Text(
+                                        'Masuk',
+                                        style: blackTextStyle.copyWith(
+                                          fontWeight: semiBold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        dataToday?['masuk'] == null
+                                            ? '--:--'
+                                            : "${DateFormat.jms().format(DateTime.parse(dataToday!['masuk']['date']))}",
+                                        style: blackTextStyle.copyWith(
+                                          fontWeight: medium,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   Container(
@@ -152,17 +176,29 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                   Column(
                                     children: [
-                                      Text("Keluar"),
-                                      Text(dataToday?['keluar'] == null
-                                          ? '--:--'
-                                          : "${DateFormat.jms().format(DateTime.parse(dataToday!['keluar']['date']))}"),
+                                      Text(
+                                        "Keluar",
+                                        style: blackTextStyle.copyWith(
+                                          fontWeight: semiBold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        dataToday?['keluar'] == null
+                                            ? '--:--'
+                                            : "${DateFormat.jms().format(DateTime.parse(dataToday!['keluar']['date']))}",
+                                        style: blackTextStyle.copyWith(
+                                          fontWeight: medium,
+                                        ),
+                                      ),
                                     ],
                                   )
                                 ],
                               );
                             }),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Divider(
                     color: Colors.grey[300],
                     thickness: 2,
@@ -170,15 +206,27 @@ class HomeView extends GetView<HomeController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Last 5 days'),
+                      Text(
+                        'Last 5 days',
+                        style: blackTextStyle.copyWith(
+                          fontWeight: semiBold,
+                          fontSize: 16,
+                        ),
+                      ),
                       TextButton(
-                          onPressed: () {
-                            Get.toNamed(Routes.ALL_PRESESENSI);
-                          },
-                          child: Text('See more')),
+                        onPressed: () {
+                          Get.toNamed(Routes.ALL_PRESESENSI);
+                        },
+                        child: Text(
+                          'See more',
+                          style: blueTextStyle.copyWith(
+                            fontWeight: medium,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       stream: controller.streamLastPresence(),
                       builder: (context, snapshotPresence) {
@@ -188,7 +236,7 @@ class HomeView extends GetView<HomeController> {
                         }
                         if (snapshotPresence.data?.docs.length == 0 ||
                             snapshotPresence.data == null) {
-                          return SizedBox(
+                          return const SizedBox(
                             height: 150,
                             child: Center(
                               child: Text('Belum ada history presensi'),
@@ -232,19 +280,30 @@ class HomeView extends GetView<HomeController> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text('Masuk'),
                                             Text(
-                                                '${DateFormat.yMMMEd().format(DateTime.parse(data['date']))}'),
+                                              'Masuk',
+                                              style: blackTextStyle.copyWith(
+                                                  fontWeight: semiBold),
+                                            ),
+                                            Text(
+                                              '${DateFormat.yMMMEd().format(DateTime.parse(data['date']))}',
+                                              style: blackTextStyle,
+                                            ),
                                           ],
                                         ),
                                         Text(
-                                            '${data['masuk']?['date'] == null ? '--:--' : DateFormat.jms().format(DateTime.parse(data['masuk']!['date']))}'),
-                                        SizedBox(height: 10),
-                                        Text('Keluar'),
+                                          '${data['masuk']?['date'] == null ? '--:--' : DateFormat.jms().format(DateTime.parse(data['masuk']!['date']))}',
+                                          style: blackTextStyle,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text('Keluar',
+                                            style: blackTextStyle.copyWith(
+                                                fontWeight: semiBold)),
                                         Text(
                                           // '${DateFormat.jms().format(DateTime.parse(data['masuk']?['date']))}'
 
                                           '${data['keluar']?['date'] == null ? '--:--' : DateFormat.jms().format(DateTime.parse(data['keluar']!['date']))}',
+                                          style: blackTextStyle,
                                         ),
                                       ],
                                     ),
@@ -264,6 +323,8 @@ class HomeView extends GetView<HomeController> {
             }
           }),
       bottomNavigationBar: ConvexAppBar(
+        color: kTifanyColor,
+        backgroundColor: kPrimaryColor,
         style: TabStyle.fixedCircle,
         items: [
           TabItem(icon: Icons.home, title: 'Home'),

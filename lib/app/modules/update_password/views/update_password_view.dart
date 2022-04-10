@@ -23,7 +23,7 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: controller.newC,
               autocorrect: false,
@@ -32,7 +32,7 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: controller.confrimC,
               autocorrect: false,
@@ -41,7 +41,7 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Obx(() => ElevatedButton(
                 onPressed: () {
                   if (controller.isLoading.isFalse) {

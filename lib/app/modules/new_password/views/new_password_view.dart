@@ -23,7 +23,7 @@ class NewPasswordView extends GetView<NewPasswordController> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             ElevatedButton(

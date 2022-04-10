@@ -22,7 +22,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
               border: OutlineInputBorder(),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Obx(() => ElevatedButton(

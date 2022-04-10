@@ -67,7 +67,7 @@ class AllPresesensiView extends GetView<AllPresesensiController> {
                                 ),
                                 Text(
                                     '${DateFormat.jms().format(DateTime.now())}'),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Text('Keluar'),
                                 Text('${DateTime.now()}'),
                               ],

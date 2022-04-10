@@ -28,7 +28,7 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                   Center(
                       child: Text(
                           '${DateFormat.yMMMMEEEEd().format(DateTime.now())}')),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text('Masuk'),
                   Text('Jam : ${DateFormat.jms().format(DateTime.now())}'),
                   Text(
@@ -37,7 +37,7 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                   Text(
                     'Status: -6, 32436',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text('Keluar'),

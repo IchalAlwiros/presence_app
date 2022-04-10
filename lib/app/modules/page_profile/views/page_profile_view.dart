@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:presence_app/app/controllers/page_index_controller.dart';
 import 'package:presence_app/app/routes/app_pages.dart';
 
+import '../../../theme/theme.dart';
 import '../controllers/page_profile_controller.dart';
 
 class PageProfileView extends GetView<PageProfileController> {
@@ -15,7 +16,13 @@ class PageProfileView extends GetView<PageProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PROFILE'),
+        title: Text(
+          'PROFILE',
+          style: whiteTextStyle.copyWith(
+            fontWeight: semiBold,
+          ),
+        ),
+        backgroundColor: kPrimaryColor,
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -51,12 +58,37 @@ class PageProfileView extends GetView<PageProfileController> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Text(user['name'].toString().toUpperCase()),
-                  Text('${user['email']}'),
-                  Text('NIP : ${user['nip']}'),
-                  Text('${user['']}'),
-                  SizedBox(height: 20),
+                  Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Text(
+                        user['name'].toString().toUpperCase(),
+                        style: blackTextStyle.copyWith(
+                          fontWeight: semiBold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        '${user['job'].toString().capitalizeFirst}',
+                        style: blackTextStyle.copyWith(
+                          fontWeight: medium,
+                        ),
+                      ),
+                      Text(
+                        '${user['email']}',
+                        style: blackTextStyle.copyWith(
+                          fontWeight: medium,
+                        ),
+                      ),
+                      Text(
+                        'NIP : ${user['nip']}',
+                        style: blackTextStyle.copyWith(
+                          fontWeight: medium,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
                   ListTile(
                     onTap: () {
                       Get.toNamed(
@@ -64,30 +96,53 @@ class PageProfileView extends GetView<PageProfileController> {
                         arguments: user,
                       );
                     },
-                    leading: Icon(Icons.person),
-                    title: Text('Update Profile'),
+                    leading: Icon(Icons.person, color: kPrimaryColor),
+                    title: Text(
+                      'Update Profile',
+                      style: blackTextStyle.copyWith(
+                        fontWeight: medium,
+                      ),
+                    ),
                   ),
                   ListTile(
                     onTap: () {
                       Get.toNamed(Routes.UPDATE_PASSWORD);
                     },
-                    leading: Icon(Icons.key),
-                    title: Text('Update Password'),
+                    leading: Icon(Icons.key, color: kPrimaryColor),
+                    title: Text(
+                      'Update Password',
+                      style: blackTextStyle.copyWith(
+                        fontWeight: medium,
+                      ),
+                    ),
                   ),
                   if (user['role'] == 'admin')
                     ListTile(
                       onTap: () {
                         Get.toNamed(Routes.ADD_PEGAWAI);
                       },
-                      leading: Icon(Icons.person_add),
-                      title: Text('Add Pegawai'),
+                      leading: Icon(
+                        Icons.person_add,
+                        color: kPrimaryColor,
+                      ),
+                      title: Text(
+                        'Add Pegawai',
+                        style: blackTextStyle.copyWith(
+                          fontWeight: medium,
+                        ),
+                      ),
                     ),
                   ListTile(
                     onTap: () {
                       controller.logout();
                     },
-                    leading: Icon(Icons.logout),
-                    title: Text('Logout'),
+                    leading: Icon(Icons.logout, color: kPrimaryColor),
+                    title: Text(
+                      'Logout',
+                      style: blackTextStyle.copyWith(
+                        fontWeight: medium,
+                      ),
+                    ),
                   ),
                 ],
               );
@@ -98,6 +153,8 @@ class PageProfileView extends GetView<PageProfileController> {
             }
           }),
       bottomNavigationBar: ConvexAppBar(
+        color: kTifanyColor,
+        backgroundColor: kPrimaryColor,
         style: TabStyle.fixedCircle,
         items: [
           TabItem(icon: Icons.home, title: 'Home'),
