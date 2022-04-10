@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:presence_app/app/routes/app_pages.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -21,18 +22,20 @@ class PageIndexController extends GetxController {
 
           List<Placemark> placemarks = await placemarkFromCoordinates(
               position.latitude, position.longitude);
-          print(placemarks[0]);
-          print(placemarks[0].name);
-          // placemarks.forEach((element) {
-          //   print(element);
-          // });
-          // print(placemarks);
 
-          print('${position.latitude}, ${position.longitude}');
+          // print('${position.latitude}, ${position.longitude}');
           String address =
               '${placemarks[0].street}, ${placemarks[0].subLocality}, ${placemarks[0].locality}';
           await updatePosition(position, address);
-          Get.snackbar("${dataResponse['message']} ", '${address}');
+          // Get.snackbar("${dataResponse['message']} ", '${address}');
+
+          //cek distance between 2 position
+          double distance = Geolocator.distanceBetween(
+              -6.340033, 106.791409, position.latitude, position.longitude);
+
+          //Presensi
+          await presensi(position, address, distance);
+          Get.snackbar("Berhasil", 'Anda telah present');
         } else {
           Get.snackbar("Terjadi Kesalagan", dataResponse['message']);
         }
@@ -45,6 +48,87 @@ class PageIndexController extends GetxController {
       default:
         pageIndex.value = i;
         Get.offAllNamed(Routes.HOME);
+    }
+  }
+
+  Future<void> presensi(
+      Position position, String address, double distance) async {
+    String uid = await auth.currentUser!.uid;
+
+    CollectionReference<Map<String, dynamic>> colPresence =
+        await firestore.collection("pegawai").doc(uid).collection("presence");
+
+    QuerySnapshot<Map<String, dynamic>> snapshotPresence =
+        await colPresence.get();
+
+    print(snapshotPresence.docs.length);
+
+    DateTime now = DateTime.now();
+    DateFormat.yMd().format(now);
+    String todayDocId = DateFormat.yMd().format(now).replaceAll("/", "-");
+
+    String status = "Di luar area";
+
+    if (distance <= 200) {
+      //menegecek jaraknya
+      //didalam area
+      status = 'Di dalam area';
+    }
+
+    if (snapshotPresence.docs.length == 0) {
+      //belum pernah absen & set absent masuk
+      await colPresence.doc(todayDocId).set({
+        "date": now.toIso8601String(),
+        "masuk": {
+          "date": now.toIso8601String(),
+          "lat": position.latitude,
+          "long": position.longitude,
+          "address": address,
+          "status": "didalam area"
+        }
+      });
+    } else {
+      //Sudah pernah absen -> cek hari ini sudah absen atau belum
+      DocumentSnapshot<Map<String, dynamic>> todayDoc =
+          await colPresence.doc(todayDocId).get();
+
+      print(todayDoc.exists);
+
+      if (todayDoc.exists == true) {
+        //tinggal absen keluar atau sudah absent masuk & keluar
+        Map<String, dynamic>? dataPresenceToday = todayDoc.data();
+        if (dataPresenceToday?["keluar"] != null) {
+          //sudah absen masuk dan keluar
+
+          Get.snackbar("Sukses", "anda telah absen masuk & keluar");
+        } else {
+          //absent keluar
+          await colPresence.doc(todayDocId).update({
+            "keluar": {
+              "date": now.toIso8601String(),
+              "lat": position.latitude,
+              "long": position.longitude,
+              "address": address,
+              "status": status,
+              "distance": distance,
+            }
+          });
+        }
+      } else {
+        //absent masuk
+        print("dijalankan");
+        await colPresence.doc(todayDocId).set({
+          "date": now.toIso8601String(), //untuk mengurutkan data masuk
+          "masuk": {
+            "date": now.toIso8601String(),
+            "lat": position.latitude,
+            "long": position.longitude,
+            "address": address,
+            "status": status,
+            "distance": distance,
+          }
+        });
+      }
     }
   }
 
