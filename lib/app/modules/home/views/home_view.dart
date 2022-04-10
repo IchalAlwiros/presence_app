@@ -93,33 +93,65 @@ class HomeView extends GetView<HomeController> {
                   ),
                   const SizedBox(height: 20),
                   Container(
-                    padding: EdgeInsets.all(20),
+                    margin: EdgeInsets.only(top: 20),
+                    height: 130,
+                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: kBackgroundColor,
-                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          kInactiveColor,
+                          kPrimaryColor,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Name      :  ${user["name"]}',
-                          style: whiteTextStyle.copyWith(
-                            fontWeight: medium,
+                    child: Stack(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Icon(Icons.person, color: kWhiteColor),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    '${user["name"]}',
+                                    style: whiteTextStyle.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: medium,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Text(
+                                '${user["job"].toString().capitalize}',
+                                style: whiteTextStyle.copyWith(
+                                  fontSize: 18,
+                                  fontWeight: medium,
+                                ),
+                              ),
+                              Text(
+                                '${user["nip"]}',
+                                style: whiteTextStyle.copyWith(
+                                  fontSize: 14,
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Job           :  ${user["job"]}',
-                          style: whiteTextStyle.copyWith(
-                            fontWeight: medium,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'NIP            :  ${user["nip"]}',
-                          style: whiteTextStyle.copyWith(
-                            fontWeight: medium,
-                          ),
+                        Positioned(
+                          top: 30,
+                          left: 80,
+                          height: 130,
+                          width: MediaQuery.of(context).size.width,
+                          child: Image.asset('assets/bulb.png'),
                         ),
                       ],
                     ),

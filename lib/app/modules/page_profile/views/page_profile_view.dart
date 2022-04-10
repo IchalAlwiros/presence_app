@@ -69,7 +69,7 @@ class PageProfileView extends GetView<PageProfileController> {
                         ),
                       ),
                       Text(
-                        '${user['job'].toString().capitalizeFirst}',
+                        '${user['job'].toString().capitalize}',
                         style: blackTextStyle.copyWith(
                           fontWeight: medium,
                         ),
