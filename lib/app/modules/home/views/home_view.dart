@@ -20,18 +20,13 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'HOMEVIEW',
+          'PT KARYA SEJAHTERA',
           style: whiteTextStyle.copyWith(
             fontWeight: semiBold,
           ),
         ),
         backgroundColor: kPrimaryColor,
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () => Get.toNamed(Routes.PAGE_PROFILE),
-              icon: Icon(Icons.person))
-        ],
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
           stream: controller.streamUser(),
@@ -160,7 +155,7 @@ class HomeView extends GetView<HomeController> {
                   Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(10),
                       color: Colors.grey[200],
                     ),
                     child:
@@ -292,17 +287,17 @@ class HomeView extends GetView<HomeController> {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Material(
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(10),
                                 color: Colors.grey[200],
                                 child: InkWell(
                                   onTap: () {
                                     Get.toNamed(Routes.DETAIL_PRESENSI);
                                   },
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(10),
                                   child: Container(
                                     padding: EdgeInsets.all(20),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
