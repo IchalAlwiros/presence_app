@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -53,74 +54,90 @@ class AllPresesensiView extends GetView<AllPresesensiController> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                    padding: EdgeInsets.all(20),
-                    physics: BouncingScrollPhysics(),
-                    itemCount: 20,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.grey[200],
-                          child: InkWell(
-                            onTap: () {
-                              Get.toNamed(Routes.DETAIL_PRESENSI);
-                            },
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              padding: EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Masuk',
-                                        style: blackTextStyle.copyWith(
-                                          fontWeight: semiBold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      Text(
-                                        '${DateFormat.yMMMEd().format(DateTime.now())}',
-                                        style: blackTextStyle.copyWith(
-                                          fontWeight: medium,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    '${DateFormat.jms().format(DateTime.now())}',
-                                    style: blackTextStyle.copyWith(
-                                      fontWeight: medium,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    'Keluar',
-                                    style: blackTextStyle.copyWith(
-                                      fontWeight: semiBold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${DateTime.now()}',
-                                    style: blackTextStyle.copyWith(
-                                      fontWeight: medium,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    stream: controller.streamAllPresence(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      if (snapshot.data?.docs.length == 0 ||
+                          snapshot.data == null) {
+                        return SizedBox(
+                          height: 150,
+                          child: Center(
+                            child: Text('Belum ada history presesnsi'),
                           ),
-                        ),
-                      );
+                        );
+                      }
+
+                      return ListView.builder(
+                          padding: EdgeInsets.all(20),
+                          physics: BouncingScrollPhysics(),
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            Map<String, dynamic> data =
+                                snapshot.data!.docs[index].data();
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: Material(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey[200],
+                                child: InkWell(
+                                  onTap: () {
+                                    Get.toNamed(
+                                      Routes.DETAIL_PRESENSI,
+                                      arguments: data,
+                                    );
+                                  },
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Container(
+                                    padding: EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Masuk',
+                                              style: blackTextStyle.copyWith(
+                                                  fontWeight: semiBold),
+                                            ),
+                                            Text(
+                                              '${DateFormat.yMMMEd().format(DateTime.parse(data['date']))}',
+                                              style: blackTextStyle,
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          '${data['masuk']?['date'] == null ? '--:--' : DateFormat.jms().format(DateTime.parse(data['masuk']!['date']))}',
+                                          style: blackTextStyle,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text('Keluar',
+                                            style: blackTextStyle.copyWith(
+                                                fontWeight: semiBold)),
+                                        Text(
+                                          // '${DateFormat.jms().format(DateTime.parse(data['masuk']?['date']))}'
+
+                                          '${data['keluar']?['date'] == null ? '--:--' : DateFormat.jms().format(DateTime.parse(data['keluar']!['date']))}',
+                                          style: blackTextStyle,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
                     }),
               ),
             ],
