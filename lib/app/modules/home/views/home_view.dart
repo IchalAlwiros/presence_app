@@ -44,6 +44,7 @@ class HomeView extends GetView<HomeController> {
               return ListView(
                 padding: EdgeInsets.all(20),
                 children: [
+                  const SizedBox(height: 15),
                   Row(
                     children: [
                       ClipOval(
@@ -84,6 +85,12 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ],
                       ),
+                      const Spacer(),
+                      const Icon(
+                        Icons.qr_code_scanner,
+                        size: 30.0,
+                      ),
+                      const SizedBox(width: 30)
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -142,11 +149,11 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ),
                         Positioned(
-                          top: 30,
-                          left: 80,
-                          height: 130,
+                          top: 10,
+                          left: 90,
+                          height: 150,
                           width: MediaQuery.of(context).size.width,
-                          child: Image.asset('assets/bulb.png'),
+                          child: Image.asset('assets/goal.png'),
                         ),
                       ],
                     ),
@@ -358,7 +365,7 @@ class HomeView extends GetView<HomeController> {
         style: TabStyle.fixedCircle,
         items: [
           TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.add, title: 'Add'),
+          TabItem(icon: Icons.qr_code_scanner, title: 'Add'),
           TabItem(icon: Icons.people, title: 'Profile'),
         ],
         initialActiveIndex: pageC.pageIndex.value, //optional, default as 0

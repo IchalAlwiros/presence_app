@@ -19,6 +19,7 @@ dependencies:
   geolocator: 8.2.0
   geocoding: 2.0.4
   google_fonts: 2.3.1
+  syncfusion_flutter_datepicker: 20.1.47
   flutter: 
     sdk: flutter
 
@@ -28,7 +29,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter: 
-  uses-material-design: true
-  assets:
+  assets: 
     - assets/
+  uses-material-design: true
 
